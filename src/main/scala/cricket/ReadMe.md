@@ -12,6 +12,7 @@ This is the bare minimum solution which is expected for the problem. You can add
 Make sure your code is readable and maintainable and preferably object oriented. It should be modular and extensible, to add new features if needed.
 
 Sample input and output:
+```
 No. of players for each team: 5
 No. of overs: 2
 Batting Order for team 1:
@@ -99,3 +100,4 @@ Total: 19/4
 Overs: 1.4
 
 Result: Team 1 won the match by 4 runs
+```
