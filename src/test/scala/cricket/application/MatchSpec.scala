@@ -28,7 +28,7 @@ class MatchSpec extends AnyFlatSpec {
         |
         |Total: 23/2
         |
-        |Overs: 2.0
+        |Overs: 2
         |""".stripMargin
 
     val expectedSCTeam2 =
