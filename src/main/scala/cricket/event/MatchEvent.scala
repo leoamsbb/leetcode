@@ -10,20 +10,26 @@ sealed trait MatchEvent {
 }
 
 case object BattingStartedEvent extends MatchEvent
+
 case object WicketDownEvent extends MatchEvent
+
 case object OverChangeEvent extends MatchEvent
+
 case object StrikeChangeEvent extends MatchEvent
 
 
 case object WideBallEvent extends MatchEvent {
   override def runs: Int = 1
 }
+
 case object FourHitEvent extends MatchEvent {
   override def runs: Int = 4
 }
+
 case object SixHitEvent extends MatchEvent {
   override def runs: Int = 6
 }
+
 case class RunningRunsEvent(override val runs: Int) extends MatchEvent
 
 object MatchEvent {
