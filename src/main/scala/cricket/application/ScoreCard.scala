@@ -1,6 +1,6 @@
 package cricket.application
 
-import cricket.Over.isOverDone
+import cricket.Over.{incrementOver, isOverDone}
 import cricket.Player
 import cricket.event._
 
@@ -27,7 +27,6 @@ case class ScoreCard(players: List[Player] = Nil, overs: BigDecimal = 0.0, batsm
 }
 
 object ScoreCard {
-  private val overIncrementer = BigDecimal("0.1")
 
   def applyEvent(current: ScoreCard, event: MatchEvent): ScoreCard = {
     event match {
@@ -46,22 +45,19 @@ object ScoreCard {
         val nextBatsmanIndex = getNextBatsmanIndex(current.players)
         val updatedStriker = strikerUpdated(current.players, current.batsman._1, event)
         if (noBatsmanLeft(nextBatsmanIndex))
-          current.copy(players = updatedStriker, overs = incrementBallInOver(current.overs))
+          current.copy(players = updatedStriker, overs = incrementOver(current.overs))
         else {
           val nextBatsman = current.players(nextBatsmanIndex).addEvent(BattingStartedEvent)
           val updatedNextBatsman = updatedStriker.updated(nextBatsmanIndex, nextBatsman)
-          current.copy(players = updatedNextBatsman, batsman = (nextBatsman.name, current.batsman._2), overs = incrementBallInOver(current.overs))
+          current.copy(players = updatedNextBatsman, batsman = (nextBatsman.name, current.batsman._2), overs = incrementOver(current.overs))
         }
 
       case _ =>
         val updatedPlayers = strikerUpdated(current.players, current.batsman._1, event)
-        current.copy(players = updatedPlayers, overs = incrementBallInOver(current.overs))
+        current.copy(players = updatedPlayers, overs = incrementOver(current.overs))
     }
   }
 
-  private def incrementBallInOver(current: BigDecimal) = {
-    current + overIncrementer
-  }
 
   private def strikerUpdated(players: List[Player], striker: String, event: MatchEvent) = {
     val strikerPlayerIndex = players.indexWhere(_.name == striker)
@@ -72,5 +68,5 @@ object ScoreCard {
   private def getNextBatsmanIndex(players: List[Player]) =
     players.indexWhere(!_.battingRecord.contains(BattingStartedEvent))
 
-  private def noBatsmanLeft(nextBatsmanIndex:Int) = nextBatsmanIndex == -1
+  private def noBatsmanLeft(nextBatsmanIndex: Int) = nextBatsmanIndex == -1
 }
