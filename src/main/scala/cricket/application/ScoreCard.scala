@@ -4,7 +4,6 @@ import cricket.Over.isOverDone
 import cricket.Player
 import cricket.event._
 
-import java.math.MathContext
 import scala.math.BigDecimal.RoundingMode
 
 case class ScoreCard(players: List[Player] = Nil, overs: BigDecimal = 0.0, batsman: (String, String) = ("", "")) {
@@ -46,7 +45,7 @@ object ScoreCard {
       case WicketDownEvent =>
         val nextBatsmanIndex = getNextBatsmanIndex(current.players)
         val updatedStriker = strikerUpdated(current.players, current.batsman._1, event)
-        if (nextBatsmanIndex == -1)
+        if (noBatsmanLeft(nextBatsmanIndex))
           current.copy(players = updatedStriker, overs = incrementBallInOver(current.overs))
         else {
           val nextBatsman = current.players(nextBatsmanIndex).addEvent(BattingStartedEvent)
@@ -72,4 +71,6 @@ object ScoreCard {
 
   private def getNextBatsmanIndex(players: List[Player]) =
     players.indexWhere(!_.battingRecord.contains(BattingStartedEvent))
+
+  private def noBatsmanLeft(nextBatsmanIndex:Int) = nextBatsmanIndex == -1
 }
