@@ -12,9 +12,9 @@ object ContainerWithMostWater_11 {
       val distance = right - left
       maxArea = math.max(maxArea, minHeight * distance)
 
-      if (height(left) > height(right)) {
+      if (height(left) > height(right))
         right -= 1
-      } else
+      else
         left += 1
     }
     maxArea
