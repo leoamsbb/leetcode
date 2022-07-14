@@ -6,6 +6,9 @@ object ContainsDuplicate_217 {
   import scala.collection.mutable
 
   def containsDuplicate(nums: Array[Int]): Boolean = {
+//  One liner solution using set, however it will take similar time and memory.
+//  nums.size == nums.toSet.size
+
 
     var left = 0
     var right = nums.length - 1
