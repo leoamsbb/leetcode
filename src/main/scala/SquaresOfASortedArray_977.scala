@@ -3,51 +3,47 @@ object SquaresOfASortedArray_977 {
 
   def sortedSquares(nums: Array[Int]): Array[Int] = {
 
-    val indexOfZero = nums.lastIndexWhere(_ <= 0)
-    var left = indexOfZero
-    var right = indexOfZero + 1
-    var result = Array.empty[Int]
-
-    while (left >= 0 && right < nums.length) {
+    var left = 0
+    var right = nums.length-1
+    var resultIndex = nums.length-1
+    val result = Array.ofDim[Int](nums.length)
+    while (left <= right) {
       val leftNum = math.abs(nums(left))
       val rightNum = nums(right)
 
-      if (leftNum == rightNum) {
+      if (leftNum == rightNum && left == right) {
         val square = leftNum * rightNum
-        result = result ++ Array.fill(2)(square)
-        left -= 1
-        right += 1
-      } else if (leftNum < rightNum) {
-        val leftSquare = leftNum * leftNum
-        result = result :+ leftSquare
-        left -= 1
-      } else {
+        result(resultIndex) = square
+        left += 1
+        right -= 1
+      } else if (leftNum == rightNum) {
+        val square = leftNum * rightNum
+        result(resultIndex) = square
+        result(resultIndex - 1) = square
+        resultIndex -= 2
+        left += 1
+        right -= 1
+      }
+      else if (leftNum < rightNum) {
         val rightSquare = rightNum * rightNum
-        result = result :+ rightSquare
-        right += 1
+        result(resultIndex) = rightSquare
+        resultIndex -= 1
+        right -= 1
+      } else {
+        val leftSquare = leftNum * leftNum
+        result(resultIndex) = leftSquare
+        resultIndex -= 1
+        left += 1
       }
     }
 
-    while (left >= 0) {
-      val leftNum = nums(left)
-      val leftSquare = leftNum * leftNum
-      result = result :+ leftSquare
-      left -= 1
-    }
-
-    while (right < nums.length) {
-      val rightNum = nums(right)
-      val rightSquare = rightNum * rightNum
-      result = result :+ rightSquare
-      right += 1
-    }
-
-    println(result.mkString(","))
     result
   }
 
   def main(args: Array[String]): Unit = {
     assert(sortedSquares(Array(-4,-1,0,3,10)).mkString(",") == "0,1,9,16,100")
     assert(sortedSquares(Array(-7,-3,2,3,11)).mkString(",") == "4,9,9,49,121")
+    assert(sortedSquares(Array(-5,-3,-2,-1)).mkString(",") == "1,4,9,25")
+    assert(sortedSquares(Array(0, 2)).mkString(",") == "0,4")
   }
 }
