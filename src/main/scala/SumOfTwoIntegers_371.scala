@@ -3,10 +3,15 @@
 object SumOfTwoIntegers_371 {
 
   def getSum(a: Int, b: Int): Int = {
-    b match {
-      case 0 => a
-      case _ => getSum(a ^ b, (a & b) << 1)
+    var num1 = a
+    var num2 = b
+    var temp = num1
+    while (num2 != 0) {
+      temp = num1 ^ num2
+      num2 = (num1 & num2) << 1
+      num1 = temp
     }
+    num1
   }
 
   def main(args: Array[String]): Unit = {
