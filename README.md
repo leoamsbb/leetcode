@@ -4,6 +4,7 @@ Ohh Anything and Everything (all at once)!
 | #id | Difficulty | Problem Description                                                                                                             | Solution Class Name                      |
 |-----|------------|---------------------------------------------------------------------------------------------------------------------------------|------------------------------------------|
 | 01  | Easy       | [Two Sum](https://leetcode.com/problems/two-sum/)                                                                               | TwoSum_01                                |
+| 70  | Easy       | [Climbing Stairs](https://leetcode.com/problems/climbing-stairs/)                                                               | ClimbingStairs_70                        |
 | 121 | Easy       | [Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)                               | BestTimetoBuyandSellStock_121            |
 | 217 | Easy       | [Contains Duplicate](https://leetcode.com/problems/contains-duplicate/)                                                         | ContainsDuplicate_217                    |
 | 724 | Easy       | [Find Pivot Index](https://leetcode.com/problems/find-pivot-index/)                                                             | FindPivotIndex_724                       |
