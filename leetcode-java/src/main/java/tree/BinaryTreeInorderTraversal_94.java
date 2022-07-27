@@ -2,6 +2,9 @@ package tree;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Stack;
+import java.util.stream.Collectors;
 
 // https://leetcode.com/problems/binary-tree-inorder-traversal/
 public class BinaryTreeInorderTraversal_94 {
@@ -25,7 +28,7 @@ public class BinaryTreeInorderTraversal_94 {
         }
     }
 
-    public List<Integer> inorderTraversal(TreeNode root) {
+    public List<Integer> inorderTraversalRecursive(TreeNode root) {
         var result = new ArrayList<Integer>();
         addNode(root, result);
         return result;
@@ -41,13 +44,40 @@ public class BinaryTreeInorderTraversal_94 {
         }
     }
 
+    public List<Integer> inorderTraversal(TreeNode root) {
+        var result = new ArrayList<Integer>();
+        var stack = new Stack<TreeNode>();
+
+        var node = root;
+
+        while (node != null || !stack.isEmpty()) {
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+            if (!stack.isEmpty()) {
+                node = stack.pop();
+                result.add(node.val);
+            }
+            node = node.right;
+        }
+
+        return result;
+    }
+
     public static void main(String[] args) {
         var instance = new BinaryTreeInorderTraversal_94();
 
-        var three = new TreeNode(3, null, null);
-        var two = new TreeNode(2, three, null);
-        var root = new TreeNode(1, null, two);
-        instance.inorderTraversal(root).forEach(System.out::println);
+        var root = new TreeNode(1, null, new TreeNode(2, new TreeNode(3), null));
+        System.out.println(toStr(instance.inorderTraversal(root)));
+
+
+        root = new TreeNode(2, new TreeNode(3, new TreeNode(1),null), null);
+        System.out.println(toStr(instance.inorderTraversal(root)));
+    }
+
+    private static String toStr(List<Integer> result) {
+        return result.stream().map(Objects::toString).collect(Collectors.joining(","));
     }
 
 }
