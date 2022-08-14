@@ -10,41 +10,44 @@ public class SummaryRanges228 {
         final var inputSize = nums.length;
         if (inputSize == 0) {
             return List.of();
-        } else if (inputSize == 1) {
-            return List.of(getRange(nums[0]));
-        } else if (inputSize == nums[inputSize - 1] - nums[0] + 1) {
+        } else if (entireInputIsSequence(nums)) {
             return List.of(getRange(nums[0], nums[inputSize - 1]));
         } else {
             final var result = new ArrayList<String>();
             int from = 0;
-            int current;
-            int next;
             int index = 0;
             while (index < inputSize) {
                 if (index == 0) {
                     from = nums[0];
                 }
-                current = nums[index];
-                if (index + 1 == inputSize) {
-                    if (current == from)
-                        result.add(getRange(from));
-                    else
-                        result.add(getRange(from, current));
-                } else {
-                    next = nums[index + 1];
-                    if (next > current + 1) {
-                        if (current == from)
-                            result.add(getRange(current));
-                        else
-                            result.add(getRange(from, current));
-                        from = next;
-                    }
+                int current = nums[index];
+                if (isLastElement(inputSize, index)) {
+                    result.add(checkFromWithCurrentAndGetRange(from, current));
+                } else if (nums[index + 1] > current + 1) {
+                    result.add(checkFromWithCurrentAndGetRange(from, current));
+                    from = nums[index + 1];
                 }
                 index++;
             }
 
             return result;
         }
+    }
+
+    private boolean entireInputIsSequence(int[] nums) {
+        int inputSize = nums.length;
+        return inputSize != 1 && inputSize == nums[inputSize - 1] - nums[0] + 1;
+    }
+
+    private boolean isLastElement(int inputSize, int index) {
+        return index + 1 == inputSize;
+    }
+
+    private String checkFromWithCurrentAndGetRange(int from, int current) {
+        if (current == from)
+            return getRange(current);
+        else
+            return getRange(from, current);
     }
 
     private String getRange(final int num) {
