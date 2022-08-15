@@ -6,13 +6,11 @@ import java.util.Stack;
 
 // https://leetcode.com/problems/binary-tree-inorder-traversal/
 public class BinaryTreeInorderTraversal94 {
-
     public List<Integer> inorderTraversalRecursive(TreeNode root) {
         var result = new ArrayList<Integer>();
         addNode(root, result);
         return result;
     }
-
     private void addNode(TreeNode node, List<Integer> result) {
         if (node == null) {
             return;
